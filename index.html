@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOLPHIS — Menu | Oleh-Oleh Bolen Premium No.1 di Indonesia Timur</title>
+<meta name="description" content="Oleh-Oleh Bolen Premium No.1 di Indonesia Timur — pisang legit dibalut pastry renyah, dengan topping melimpah. Pesan lewat WhatsApp.">
+<style>
+:root{--maroon:#4A1212;--maroon2:#6b1a1a;--gold:#F5D67A;--gold2:#e8c25a;--cream:#FFF8E7;--ink:#2b1a1a;--muted:#7a6a6a}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink)}
+a{color:inherit}
+header.hero{background:var(--maroon);color:#fff;text-align:center;padding:36px 16px 28px}
+header.hero img{width:280px;max-width:80vw;height:auto;display:block;margin:0 auto 12px}
+header.hero h1{font-size:26px;line-height:1.25;margin:8px 0;color:var(--gold)}
+header.hero p{max-width:640px;margin:0 auto;color:#f3e6c8;line-height:1.6}
+nav.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px;background:#fff;border-bottom:1px solid #eee}
+nav.chips a{text-decoration:none;background:#f6ead0;border:1px solid #ecd9a8;padding:8px 14px;border-radius:999px;font-weight:600}
+main{max-width:1080px;margin:0 auto;padding:20px 14px 110px}
+h2{color:var(--maroon);margin:28px 4px 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:#fff;border:1px solid #eee;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(74,18,18,.06)}
+.card img{width:100%;height:210px;object-fit:cover;display:block;background:#f3e6c8}
+.card .body{padding:14px}
+.card h3{margin:0 0 6px;color:var(--maroon)}
+.price{font-size:20px;font-weight:800;color:var(--maroon2)}
+.muted{color:var(--muted);font-size:14px;line-height:1.5}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+select,input,textarea{font:inherit;padding:9px 10px;border:1px solid #ddd;border-radius:10px;width:100%}
+select.size{width:auto;flex:1}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:34px;height:34px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:18px;cursor:pointer}
+.qty span{min-width:22px;text-align:center;font-weight:700}
+.btn{background:var(--maroon);color:#fff;border:0;padding:11px 16px;border-radius:999px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+.btn.gold{background:var(--gold);color:var(--maroon)}
+.btn.wa{background:#1fa855}
+.btn.block{width:100%}
+.badge{display:inline-block;background:var(--gold);color:var(--maroon);padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700}
+#cartBtn{position:fixed;right:18px;bottom:18px;z-index:50;background:var(--maroon);color:#fff;border:0;border-radius:999px;padding:14px 20px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+#cartBtn span{background:var(--gold);color:var(--maroon);border-radius:999px;padding:2px 9px;margin-left:6px}
+#drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:60;justify-content:flex-end}
+#drawer.open{display:flex}
+#drawer .panel{background:#fff;width:min(440px,100%);height:100%;overflow:auto;padding:20px}
+.item{display:flex;gap:10px;border-bottom:1px solid #eee;padding:10px 0}
+.item img{width:64px;height:64px;object-fit:cover;border-radius:10px}
+.item .grow{flex:1}
+.item h4{margin:0 0 4px}
+.total{display:flex;justify-content:space-between;font-size:20px;font-weight:800;margin:14px 0}
+label{display:block;font-weight:600;margin:12px 0 4px}
+.loc{background:#fff;border:1px solid #eee;border-radius:14px;padding:14px}
+.loc h3{margin:0 0 6px;color:var(--maroon)}
+footer{background:var(--maroon);color:#f3e6c8;text-align:center;padding:24px 16px;line-height:1.7}
+footer a{color:var(--gold)}
+@media(max-width:520px){header.hero h1{font-size:22px}.card img{height:190px}}
+</style>
+</head>
+<body>
+<header class="hero">
+<img src="assets/logo.jpg" alt="Logo BOLPHIS Bolen Pisang Phinisi">
+<h1>Oleh-Oleh Bolen Premium No.1 di Indonesia Timur</h1>
+<p>Pisang legit dibalut pastry renyah, dengan topping melimpah. Pilih varian, pilih ukuran, lalu order lewat WhatsApp.</p>
+</header>
+<nav class="chips">
+<a href="#reguler">Bolen Reguler</a><a href="#balanda">Balanda Series</a><a href="#tambahan">Tambahan</a><a href="#lokasi">Lokasi Outlet</a>
+</nav>
+<main>
+<h2 id="reguler">Bolen Reguler</h2>
+<div class="grid" id="grid-reguler"></div>
+<h2 id="balanda">Balanda Series</h2>
+<div class="grid" id="grid-balanda"></div>
+<h2 id="tambahan">Tambahan</h2>
+<div class="grid" id="grid-tambahan"></div>
+<h2 id="lokasi">Lokasi Outlet</h2>
+<div class="grid" id="grid-lokasi"></div>
+<p class="muted">Outlet Maros buka 06.00–22.00. Untuk lokasi lainnya, buka tautan Google Maps di tiap kartu outlet.</p>
+</main>
+<button id="cartBtn" type="button">Keranjang <span id="cartCount">0</span></button>
+<div id="drawer" role="dialog" aria-label="Keranjang Belanja">
+<div class="panel">
+<h2 style="margin-top:0">Keranjang Belanja</h2>
+<div id="cartItems"></div>
+<div class="total"><span>Total</span><span id="cartTotal">Rp0</span></div>
+<label for="nama">Nama Anda</label><input id="nama" type="text" placeholder="Nama Anda">
+<label for="hp">Nomor HP</label><input id="hp" type="tel" placeholder="08xx xxxx xxxx">
+<label>Pengambilan</label>
+<div class="row">
+<label style="margin:0;font-weight:600"><input type="radio" name="metode" value="Ambil di outlet" checked style="width:auto"> Ambil di outlet</label>
+<label style="margin:0;font-weight:600"><input type="radio" name="metode" value="Diantar" style="width:auto"> Diantar</label>
+</div>
+<div id="pickupBox">
+<label for="outlet">Pilih Outlet</label>
+<select id="outlet">
+<option>Racing Centre</option><option>Alauddin</option><option>Sudiang</option><option>Panciro</option><option>Maros</option>
+</select>
+</div>
+<div id="deliveryBox" style="display:none">
+<label for="alamat">Alamat Pengiriman</label><textarea id="alamat" rows="3" placeholder="Alamat lengkap pengiriman"></textarea>
+</div>
+<label for="catatan">Catatan (opsional)</label><textarea id="catatan" rows="2" placeholder="Misalnya: tanpa tote bag, pesan untuk hadiah, dll."></textarea>
+<button class="btn wa block" id="orderBtn" type="button" style="margin-top:16px">ORDER VIA WHATSAPP</button>
+<button class="btn block" id="closeBtn" type="button" style="background:#eee;color:#333;margin-top:8px">Tutup Keranjang</button>
+<p class="muted">Pesanan diteruskan sebagai pesan WhatsApp ke 0811-4001-1911. Pembayaran dikonfirmasi lewat WhatsApp.</p>
+</div>
+</div>
+<footer>
+<p><strong>BOLPHIS</strong> — Bolen Pisang Phinisi<br>
+Order: <a href="https://wa.me/6281140011911">0811-4001-1911</a> &nbsp;|&nbsp; Instagram / TikTok: @bolphis.id<br>
+Halal certified by MUI</p>
+</footer>
+<script>
+const PRODUCTS=[
+{id:'premium',name:'Premium Choco Cheese',section:'reguler',small:49000,large:79000,imgSmall:'assets/premium-small.png',imgLarge:'assets/premium-large.png'},
+{id:'mix',name:'Mix Choco Cheese',section:'reguler',small:44000,large:69000,imgSmall:'assets/mix-small.png',imgLarge:'assets/mix-large.png'},
+{id:'cheese',name:'Cheese',section:'reguler',small:44000,large:69000,imgSmall:'assets/cheese-small.png',imgLarge:'assets/cheese-large.png'},
+{id:'choco',name:'Choco',section:'reguler',small:40000,large:65000,imgSmall:'assets/choco-small.png',imgLarge:'assets/choco-large.png'},
+{id:'original',name:'Original',section:'reguler',small:35000,large:55000,imgSmall:'assets/original-small.png',imgLarge:'assets/original-large.png'},
+{id:'balanda-mix',name:'Balanda Mix',section:'balanda',small:47000,large:77000,imgSmall:'assets/balanda-mix-small.png',imgLarge:'assets/balanda-mix-large.png'},
+{id:'balanda-cheese',name:'Balanda Cheese',section:'balanda',small:45000,large:75000,imgSmall:'assets/balanda-cheese-small.png',imgLarge:'assets/balanda-cheese-large.png'},
+{id:'balanda-choco',name:'Balanda Choco',section:'balanda',small:45000,large:75000,imgSmall:'assets/balanda-choco-small.png',imgLarge:'assets/balanda-choco-large.png'},
+{id:'balanda-ori',name:'Balanda Ori',section:'balanda',small:40000,large:65000,imgSmall:'assets/balanda-ori-small.png',imgLarge:'assets/balanda-ori-large.png'},
+{id:'tote',name:'Tote Bag',section:'tambahan',small:4000,large:6000,imgSmall:'assets/tote-bag.png',imgLarge:'assets/tote-bag.png'}
+];
+const LOCATIONS=[
+{name:'Racing Centre',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Racing+Centre+Makassar'},
+{name:'Alauddin',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Alauddin+Makassar'},
+{name:'Sudiang',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Sudiang+Makassar'},
+{name:'Panciro',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Panciro+Gowa'},
+{name:'Maros',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Maros',note:'Buka 06.00–22.00'},
+{name:'Bandara Sultan Hasanuddin',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Bandara+Sultan+Hasanuddin'}
+];
+const fmt=n=>'Rp'+n.toLocaleString('id-ID');
+let cart=[];
+function renderProducts(){
+PRODUCTS.forEach(p=>{
+const el=document.createElement('article');el.className='card';
+el.innerHTML=`<img src="${p.imgLarge}" alt="${p.name} Large isi 10" data-img>
+<div class="body"><h3>${p.name}</h3><div class="price" data-price>${fmt(p.large)}</div><p class="muted" data-isi>Large — isi 10</p>
+<div class="row"><select class="size" aria-label="Ukuran ${p.name}"><option value="large">Large</option><option value="small">Small</option></select>
+<span class="qty"><button type="button" data-dec>-</button><span data-qty>1</span><button type="button" data-inc>+</button></span></div>
+<button class="btn block" type="button" data-add style="margin-top:10px">Tambah ke Keranjang</button></div>`;
+const img=el.querySelector('[data-img]'),price=el.querySelector('[data-price]'),isi=el.querySelector('[data-isi]'),size=el.querySelector('.size'),qtyEl=el.querySelector('[data-qty]');
+let qty=1;
+function sync(){const large=size.value==='large';img.src=large?p.imgLarge:p.imgSmall;img.alt=p.name+(large?' Large isi 10':' Small isi 6');price.textContent=fmt(large?p.large:p.small);isi.textContent=large?'Large — isi 10':'Small — isi 6';}
+size.addEventListener('change',sync);
+el.querySelector('[data-inc]').addEventListener('click',()=>{qty++;qtyEl.textContent=qty;});
+el.querySelector('[data-dec]').addEventListener('click',()=>{if(qty>1){qty--;qtyEl.textContent=qty;}});
+el.querySelector('[data-add]').addEventListener('click',()=>{
+const large=size.value==='large';const key=p.id+'-'+size.value;const price=large?p.large:p.small;
+const found=cart.find(i=>i.key===key);
+if(found){found.qty+=qty;}else{cart.push({key,name:p.name,size:large?'Large':'Small',sizeLabel:large?'Large (isi 10)':'Small (isi 6)',price,img:large?p.imgLarge:p.imgSmall,qty});}
+renderCart();openDrawer();});
+document.getElementById('grid-'+p.section).appendChild(el);
+});
+// Durian placeholder
+const d=document.createElement('article');d.className='card';
+d.innerHTML=`<div class="body"><h3>Durian</h3><span class="badge">Pricelist menyusul</span><p class="muted">Harga varian Durian belum tersedia. Tanya dulu lewat WhatsApp sebelum memesan.</p><a class="btn wa block" href="https://wa.me/6281140011911?text=${encodeURIComponent('Halo kak, boleh info varian Durian Bolphisnya?')}">Tanya via WhatsApp</a></div>`;
+document.getElementById('grid-tambahan').appendChild(d);
+}
+function renderLocations(){
+LOCATIONS.forEach(l=>{
+const el=document.createElement('div');el.className='loc';
+el.innerHTML=`<h3>${l.name}</h3>${l.note?`<p class="muted">${l.note}</p>`:''}<a class="btn gold" href="${l.maps}" target="_blank" rel="noopener">Buka Google Maps</a>`;
+document.getElementById('grid-lokasi').appendChild(el);
+});
+}
+function renderCart(){
+const box=document.getElementById('cartItems');
+let total=0,count=0;
+if(!cart.length){box.innerHTML='<p class="muted">Keranjang Kosong</p>';}
+else{box.innerHTML=cart.map((i,idx)=>{total+=i.price*i.qty;count+=i.qty;return `<div class="item"><img src="${i.img}" alt="${i.name}"><div class="grow"><h4>${i.name}</h4><div class="muted">${i.sizeLabel} — ${fmt(i.price)}</div><div class="qty" style="margin-top:6px"><button type="button" onclick="changeQty(${idx},-1)">-</button><span>${i.qty}</span><button type="button" onclick="changeQty(${idx},1)">+</button><button type="button" onclick="removeItem(${idx})" style="width:auto;border-radius:999px;padding:4px 10px;font-size:13px">Hapus</button></div></div><div><strong>${fmt(i.price*i.qty)}</strong></div></div>`;}).join('');}
+document.getElementById('cartTotal').textContent=fmt(total);
+document.getElementById('cartCount').textContent=count;
+}
+function changeQty(idx,d){cart[idx].qty+=d;if(cart[idx].qty<=0){cart.splice(idx,1);}renderCart();}
+function removeItem(idx){cart.splice(idx,1);renderCart();}
+function openDrawer(){document.getElementById('drawer').classList.add('open');}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');}
+document.getElementById('cartBtn').addEventListener('click',()=>{renderCart();openDrawer();});
+document.getElementById('closeBtn').addEventListener('click',closeDrawer);
+document.getElementById('drawer').addEventListener('click',e=>{if(e.target.id==='drawer')closeDrawer();});
+document.querySelectorAll('input[name="metode"]').forEach(r=>r.addEventListener('change',()=>{
+const delivery=document.querySelector('input[name="metode"]:checked').value==='Diantar';
+document.getElementById('pickupBox').style.display=delivery?'none':'block';
+document.getElementById('deliveryBox').style.display=delivery?'block':'none';
+}));
+document.getElementById('orderBtn').addEventListener('click',()=>{
+if(!cart.length){alert('Keranjang masih kosong.');return;}
+const nama=document.getElementById('nama').value.trim(),hp=document.getElementById('hp').value.trim();
+if(!nama||!hp){alert('Isi nama dan nomor HP dulu ya.');return;}
+const metode=document.querySelector('input[name="metode"]:checked').value;
+let tujuan='';
+if(metode==='Diantar'){tujuan=document.getElementById('alamat').value.trim();if(!tujuan){alert('Isi alamat pengiriman dulu ya.');return;}}
+else{tujuan='Ambil di outlet '+document.getElementById('outlet').value;}
+const catatan=document.getElementById('catatan').value.trim();
+let total=0;const lines=cart.map(i=>{total+=i.price*i.qty;return `- ${i.name} ${i.sizeLabel} x ${i.qty} = ${fmt(i.price*i.qty)}`;});
+let msg=`Halo Bolphis, saya mau pesan:\n${lines.join('\n')}\nTotal: ${fmt(total)}\nNama: ${nama}\nNo HP: ${hp}\n${metode}: ${tujuan}`;
+if(catatan)msg+=`\nCatatan: ${catatan}`;
+window.open('https://wa.me/6281140011911?text='+encodeURIComponent(msg),'_blank');
+});
+renderProducts();renderLocations();renderCart();
+</script>
+</body>
+</html>
