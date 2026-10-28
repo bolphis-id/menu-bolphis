@@ -15,14 +15,14 @@ header.hero h1{font-size:26px;line-height:1.25;margin:8px 0;color:var(--gold)}
 header.hero p{max-width:640px;margin:0 auto;color:#f3e6c8;line-height:1.6}
 nav.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px;background:#fff;border-bottom:1px solid #eee}
 nav.chips a{text-decoration:none;background:#f6ead0;border:1px solid #ecd9a8;padding:8px 14px;border-radius:999px;font-weight:600}
-main{max-width:1080px;margin:0 auto;padding:20px 14px 110px}
+main{max-width:1220px;margin:0 auto;padding:20px 18px 110px}
 h2{color:var(--maroon);margin:28px 4px 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
 .card{background:#fff;border:1px solid #eee;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(74,18,18,.06)}
-.card img{width:100%;height:210px;object-fit:cover;display:block;background:#f3e6c8}
-.card .body{padding:14px}
-.card h3{margin:0 0 6px;color:var(--maroon)}
-.price{font-size:20px;font-weight:800;color:var(--maroon2)}
+.card img{width:100%;height:280px;object-fit:cover;display:block;background:#f3e6c8}
+.card .body{padding:20px}
+.card h3{margin:0 0 8px;color:var(--maroon);font-size:21px;line-height:1.3}
+.price{font-size:23px;font-weight:800;color:var(--maroon2)}
 .muted{color:var(--muted);font-size:14px;line-height:1.5}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 select,input,textarea{font:inherit;padding:9px 10px;border:1px solid #ddd;border-radius:10px;width:100%}
@@ -35,6 +35,14 @@ select.size{width:auto;flex:1}
 .btn.wa{background:#1fa855}
 .btn.block{width:100%}
 .badge{display:inline-block;background:var(--gold);color:var(--maroon);padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700}
+.sizebtn{display:flex;gap:8px;flex:1}
+.sizebtn button{flex:1;padding:11px 6px;border:1.5px solid #ddd;background:#fff;border-radius:999px;font-weight:700;cursor:pointer;font-size:14px}
+.sizebtn button.active{background:var(--maroon);color:#fff;border-color:var(--maroon)}
+.oldprice{color:#a00;text-decoration:line-through;font-size:16px;margin-right:8px}
+.promo-banner img{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 8px 24px rgba(74,18,18,.18)}
+.promo-banner{margin:8px 0 4px}
+.tote-note{background:#fff3d6;border:1px solid #ecd9a8;border-radius:14px;padding:14px 16px;line-height:1.6;margin:16px 0}
+
 #cartBtn{position:fixed;right:18px;bottom:18px;z-index:50;background:var(--maroon);color:#fff;border:0;border-radius:999px;padding:14px 20px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
 #cartBtn span{background:var(--gold);color:var(--maroon);border-radius:999px;padding:2px 9px;margin-left:6px}
 #drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:60;justify-content:flex-end}
@@ -50,7 +58,7 @@ label{display:block;font-weight:600;margin:12px 0 4px}
 .loc h3{margin:0 0 6px;color:var(--maroon)}
 footer{background:var(--maroon);color:#f3e6c8;text-align:center;padding:24px 16px;line-height:1.7}
 footer a{color:var(--gold)}
-@media(max-width:520px){header.hero h1{font-size:22px}.card img{height:190px}}
+@media(max-width:520px){header.hero h1{font-size:22px}.card img{height:240px}}
 </style>
 </head>
 <body>
@@ -58,11 +66,19 @@ footer a{color:var(--gold)}
 <img src="assets/logo.jpg" alt="Logo BOLPHIS Bolen Pisang Phinisi">
 <h1>Oleh-Oleh Bolen Premium No.1 di Indonesia Timur</h1>
 <p>Pisang legit dibalut pastry renyah, dengan topping melimpah. Pilih varian, pilih ukuran, lalu order lewat WhatsApp.</p>
+<p style="margin-top:10px;font-weight:700;color:var(--gold)">Tanpa kantong plastik: setiap box Bolphis wajib pakai Tote Bag sesuai ukuran.</p>
 </header>
 <nav class="chips">
-<a href="#reguler">Bolen Reguler</a><a href="#balanda">Balanda Series</a><a href="#tambahan">Tambahan</a><a href="#lokasi">Lokasi Outlet</a>
+<a href="#reguler">Bolen Reguler</a><a href="#balanda">Balanda Series</a><a href="#paket">Paket Oleh-Oleh</a><a href="#tambahan">Tambahan</a><a href="#lokasi">Lokasi Outlet</a>
 </nav>
 <main>
+<section class="promo-banner" id="promo">
+<a href="#paket"><img src="assets/paket-oleh-oleh.jpg" alt="Promo Paket Oleh-Oleh Bolphis, mulai Rp150.000 + FREE TOTE BAG"></a>
+<p class="muted" style="text-align:center">Ketuk poster di atas untuk lihat paketnya. Semua paket sudah termasuk FREE Tote Bag.</p>
+</section>
+<div class="tote-note"><strong>Tanpa kantong plastik.</strong> Customer wajib beli Tote Bag sesuai ukuran Bolphis yang dibeli: Small Rp4.000 untuk box Small (isi 6), Large Rp6.000 untuk box Large (isi 10). Di keranjang, tote wajib ini ditambahkan otomatis per ukuran yang dipesan. Paket Oleh-Oleh tidak dikenakan tote lagi karena sudah FREE Tote Bag.</div>
+<h2 id="paket">Paket Oleh-Oleh — FREE TOTE BAG</h2>
+<div class="grid" id="grid-paket"></div>
 <h2 id="reguler">Bolen Reguler</h2>
 <div class="grid" id="grid-reguler"></div>
 <h2 id="balanda">Balanda Series</h2>
@@ -71,7 +87,7 @@ footer a{color:var(--gold)}
 <div class="grid" id="grid-tambahan"></div>
 <h2 id="lokasi">Lokasi Outlet</h2>
 <div class="grid" id="grid-lokasi"></div>
-<p class="muted">Outlet Maros buka 06.00–22.00. Untuk lokasi lainnya, buka tautan Google Maps di tiap kartu outlet.</p>
+<p class="muted">Semua outlet buka 06.00–22.00, kecuali Bandara Sultan Hasanuddin buka 24 jam. Buka tautan Google Maps di tiap kartu outlet untuk lokasi lengkapnya.</p>
 </main>
 <button id="cartBtn" type="button">Keranjang <span id="cartCount">0</span></button>
 <div id="drawer" role="dialog" aria-label="Keranjang Belanja">
@@ -95,7 +111,7 @@ footer a{color:var(--gold)}
 <div id="deliveryBox" style="display:none">
 <label for="alamat">Alamat Pengiriman</label><textarea id="alamat" rows="3" placeholder="Alamat lengkap pengiriman"></textarea>
 </div>
-<label for="catatan">Catatan (opsional)</label><textarea id="catatan" rows="2" placeholder="Misalnya: tanpa tote bag, pesan untuk hadiah, dll."></textarea>
+<label for="catatan">Catatan (opsional)</label><textarea id="catatan" rows="2" placeholder="Misalnya: pesan untuk hadiah, dll."></textarea>
 <button class="btn wa block" id="orderBtn" type="button" style="margin-top:16px">ORDER VIA WHATSAPP</button>
 <button class="btn block" id="closeBtn" type="button" style="background:#eee;color:#333;margin-top:8px">Tutup Keranjang</button>
 <p class="muted">Pesanan diteruskan sebagai pesan WhatsApp ke 0811-4001-1911. Pembayaran dikonfirmasi lewat WhatsApp.</p>
@@ -119,13 +135,19 @@ const PRODUCTS=[
 {id:'balanda-ori',name:'Balanda Ori',section:'balanda',small:40000,large:65000,imgSmall:'assets/balanda-ori-small.png',imgLarge:'assets/balanda-ori-large.png'},
 {id:'tote',name:'Tote Bag',section:'tambahan',small:4000,large:6000,imgSmall:'assets/tote-bag.png',imgLarge:'assets/tote-bag.png'}
 ];
+
+const PACKAGES=[
+{id:'paket-classic',name:'Classic Package',detail:'4 Box Small',price:150000,old:154000,contents:'2 Box Small Choco + 2 Box Small Original',tag:''},
+{id:'paket-durian',name:'Durian Package',detail:'5 Box Small',price:202000,old:206000,contents:'3 Box Small Durian + 2 Box Small Original',tag:'RECOMMENDED'},
+{id:'paket-premium',name:'Premium Package',detail:'6 Box Small',price:256000,old:260000,contents:'2 Box Small Durian + 1 Box Small Premium Choco Cheese + 1 Box Small Mix Choco Cheese + 1 Box Small Choco + 1 Box Small Original',tag:''}
+];
 const LOCATIONS=[
-{name:'Racing Centre',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Racing+Centre+Makassar'},
-{name:'Alauddin',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Alauddin+Makassar'},
-{name:'Sudiang',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Sudiang+Makassar'},
-{name:'Panciro',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Panciro+Gowa'},
+{name:'Racing Centre',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Racing+Centre+Makassar',note:'Buka 06.00–22.00'},
+{name:'Alauddin',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Alauddin+Makassar',note:'Buka 06.00–22.00'},
+{name:'Sudiang',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Sudiang+Makassar',note:'Buka 06.00–22.00'},
+{name:'Panciro',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Panciro+Gowa',note:'Buka 06.00–22.00'},
 {name:'Maros',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Maros',note:'Buka 06.00–22.00'},
-{name:'Bandara Sultan Hasanuddin',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Bandara+Sultan+Hasanuddin'}
+{name:'Bandara Sultan Hasanuddin',maps:'https://www.google.com/maps/search/?api=1&query=BOLPHIS+Bandara+Sultan+Hasanuddin',note:'Buka 24 jam'}
 ];
 const fmt=n=>'Rp'+n.toLocaleString('id-ID');
 let cart=[];
@@ -134,26 +156,56 @@ PRODUCTS.forEach(p=>{
 const el=document.createElement('article');el.className='card';
 el.innerHTML=`<img src="${p.imgLarge}" alt="${p.name} Large isi 10" data-img>
 <div class="body"><h3>${p.name}</h3><div class="price" data-price>${fmt(p.large)}</div><p class="muted" data-isi>Large — isi 10</p>
-<div class="row"><select class="size" aria-label="Ukuran ${p.name}"><option value="large">Large</option><option value="small">Small</option></select>
+<div class="row"><div class="sizebtn" role="group" aria-label="Ukuran ${p.name}"><button type="button" data-size="small">Small isi 6</button><button type="button" data-size="large" class="active">Large isi 10</button></div>
 <span class="qty"><button type="button" data-dec>-</button><span data-qty>1</span><button type="button" data-inc>+</button></span></div>
 <button class="btn block" type="button" data-add style="margin-top:10px">Tambah ke Keranjang</button></div>`;
-const img=el.querySelector('[data-img]'),price=el.querySelector('[data-price]'),isi=el.querySelector('[data-isi]'),size=el.querySelector('.size'),qtyEl=el.querySelector('[data-qty]');
-let qty=1;
-function sync(){const large=size.value==='large';img.src=large?p.imgLarge:p.imgSmall;img.alt=p.name+(large?' Large isi 10':' Small isi 6');price.textContent=fmt(large?p.large:p.small);isi.textContent=large?'Large — isi 10':'Small — isi 6';}
-size.addEventListener('change',sync);
+const img=el.querySelector('[data-img]'),price=el.querySelector('[data-price]'),isi=el.querySelector('[data-isi]'),qtyEl=el.querySelector('[data-qty]');
+let qty=1;let chosen='large';
+const sizeBtns=el.querySelectorAll('.sizebtn button');
+function sync(){const large=chosen==='large';img.src=large?p.imgLarge:p.imgSmall;img.alt=p.name+(large?' Large isi 10':' Small isi 6');price.textContent=fmt(large?p.large:p.small);isi.textContent=large?'Large — isi 10':'Small — isi 6';sizeBtns.forEach(b=>b.classList.toggle('active',b.dataset.size===chosen));}
+sizeBtns.forEach(b=>b.addEventListener('click',()=>{chosen=b.dataset.size;sync();}));
 el.querySelector('[data-inc]').addEventListener('click',()=>{qty++;qtyEl.textContent=qty;});
 el.querySelector('[data-dec]').addEventListener('click',()=>{if(qty>1){qty--;qtyEl.textContent=qty;}});
 el.querySelector('[data-add]').addEventListener('click',()=>{
-const large=size.value==='large';const key=p.id+'-'+size.value;const price=large?p.large:p.small;
+const large=chosen==='large';const key=p.id+'-'+chosen;const price=large?p.large:p.small;
 const found=cart.find(i=>i.key===key);
-if(found){found.qty+=qty;}else{cart.push({key,name:p.name,size:large?'Large':'Small',sizeLabel:large?'Large (isi 10)':'Small (isi 6)',price,img:large?p.imgLarge:p.imgSmall,qty});}
-renderCart();openDrawer();});
+if(found){found.qty+=qty;}else{cart.push({key,kind:p.id==='tote'?'tote':'bolen',name:p.name,size:large?'Large':'Small',sizeLabel:large?'Large (isi 10)':'Small (isi 6)',price,img:large?p.imgLarge:p.imgSmall,qty});}
+syncMandatoryTotes();renderCart();openDrawer();});
 document.getElementById('grid-'+p.section).appendChild(el);
 });
 // Durian placeholder
 const d=document.createElement('article');d.className='card';
 d.innerHTML=`<div class="body"><h3>Durian</h3><span class="badge">Pricelist menyusul</span><p class="muted">Harga varian Durian belum tersedia. Tanya dulu lewat WhatsApp sebelum memesan.</p><a class="btn wa block" href="https://wa.me/6281140011911?text=${encodeURIComponent('Halo kak, boleh info varian Durian Bolphisnya?')}">Tanya via WhatsApp</a></div>`;
 document.getElementById('grid-tambahan').appendChild(d);
+}
+
+function renderPackages(){
+PACKAGES.forEach(pk=>{
+const el=document.createElement('article');el.className='card';
+el.innerHTML=`<div class="body">${pk.tag?`<span class="badge">\u2b50 ${pk.tag}</span> `:''}<span class="badge">FREE TOTE BAG</span><h3 style="margin-top:10px">${pk.name}</h3><p class="muted">${pk.detail}</p><div><span class="oldprice">${fmt(pk.old)}</span><span class="price">${fmt(pk.price)}</span></div><p class="muted">${pk.contents}</p><p class="muted">Sudah termasuk FREE Tote Bag. Tidak dikenakan tote wajib lagi.</p>
+<div class="row"><span class="qty"><button type="button" data-dec>-</button><span data-qty>1</span><button type="button" data-inc>+</button></span></div>
+<button class="btn block" type="button" data-add style="margin-top:10px">Tambah Paket ke Keranjang</button></div>`;
+let qty=1;const qtyEl=el.querySelector('[data-qty]');
+el.querySelector('[data-inc]').addEventListener('click',()=>{qty++;qtyEl.textContent=qty;});
+el.querySelector('[data-dec]').addEventListener('click',()=>{if(qty>1){qty--;qtyEl.textContent=qty;}});
+el.querySelector('[data-add]').addEventListener('click',()=>{
+const key=pk.id;const found=cart.find(i=>i.key===key);
+if(found){found.qty+=qty;}else{cart.push({key,kind:'paket',name:pk.name,size:'Paket',sizeLabel:pk.detail+' — FREE Tote Bag',price:pk.price,img:'assets/paket-oleh-oleh.jpg',qty,contents:pk.contents});}
+renderCart();openDrawer();});
+document.getElementById('grid-paket').appendChild(el);
+});
+}
+function syncMandatoryTotes(){
+// Hapus tote otomatis yang ukurannya sudah tidak dipesan lagi
+const needed=new Set(cart.filter(i=>i.kind==='bolen').map(i=>i.size));
+cart=cart.filter(i=>!(i.mandatory && !needed.has(i.size)));
+needed.forEach(size=>{
+const hasTote=cart.some(i=>(i.kind==='tote'||i.mandatory) && i.size===size);
+if(!hasTote){
+const large=size==='Large';
+cart.push({key:'tote-auto-'+size.toLowerCase(),kind:'tote',mandatory:true,name:'Tote Bag',size:size,sizeLabel:size+(large?' (isi 10)':' (isi 6)')+' — Wajib, tanpa kantong plastik',price:large?6000:4000,img:'assets/tote-bag.png',qty:1});
+}
+});
 }
 function renderLocations(){
 LOCATIONS.forEach(l=>{
@@ -166,12 +218,12 @@ function renderCart(){
 const box=document.getElementById('cartItems');
 let total=0,count=0;
 if(!cart.length){box.innerHTML='<p class="muted">Keranjang Kosong</p>';}
-else{box.innerHTML=cart.map((i,idx)=>{total+=i.price*i.qty;count+=i.qty;return `<div class="item"><img src="${i.img}" alt="${i.name}"><div class="grow"><h4>${i.name}</h4><div class="muted">${i.sizeLabel} — ${fmt(i.price)}</div><div class="qty" style="margin-top:6px"><button type="button" onclick="changeQty(${idx},-1)">-</button><span>${i.qty}</span><button type="button" onclick="changeQty(${idx},1)">+</button><button type="button" onclick="removeItem(${idx})" style="width:auto;border-radius:999px;padding:4px 10px;font-size:13px">Hapus</button></div></div><div><strong>${fmt(i.price*i.qty)}</strong></div></div>`;}).join('');}
+else{box.innerHTML=cart.map((i,idx)=>{total+=i.price*i.qty;count+=i.qty;const controls=i.mandatory?`<div class="muted" style="margin-top:6px">Otomatis, 1 pcs per ukuran yang dipesan</div>`:`<div class="qty" style="margin-top:6px"><button type="button" onclick="changeQty(${idx},-1)">-</button><span>${i.qty}</span><button type="button" onclick="changeQty(${idx},1)">+</button><button type="button" onclick="removeItem(${idx})" style="width:auto;border-radius:999px;padding:4px 10px;font-size:13px">Hapus</button></div>`;return `<div class="item"><img src="${i.img}" alt="${i.name}"><div class="grow"><h4>${i.name}</h4><div class="muted">${i.sizeLabel} — ${fmt(i.price)}</div>${i.contents?`<div class="muted">${i.contents}</div>`:''}${controls}</div><div><strong>${fmt(i.price*i.qty)}</strong></div></div>`;}).join('');}
 document.getElementById('cartTotal').textContent=fmt(total);
 document.getElementById('cartCount').textContent=count;
 }
-function changeQty(idx,d){cart[idx].qty+=d;if(cart[idx].qty<=0){cart.splice(idx,1);}renderCart();}
-function removeItem(idx){cart.splice(idx,1);renderCart();}
+function changeQty(idx,d){if(cart[idx].mandatory && d<0)return;cart[idx].qty+=d;if(cart[idx].qty<=0){cart.splice(idx,1);}syncMandatoryTotes();renderCart();}
+function removeItem(idx){if(cart[idx].mandatory)return;cart.splice(idx,1);syncMandatoryTotes();renderCart();}
 function openDrawer(){document.getElementById('drawer').classList.add('open');}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');}
 document.getElementById('cartBtn').addEventListener('click',()=>{renderCart();openDrawer();});
@@ -196,7 +248,7 @@ let msg=`Halo Bolphis, saya mau pesan:\n${lines.join('\n')}\nTotal: ${fmt(total)
 if(catatan)msg+=`\nCatatan: ${catatan}`;
 window.open('https://wa.me/6281140011911?text='+encodeURIComponent(msg),'_blank');
 });
-renderProducts();renderLocations();renderCart();
+renderProducts();renderPackages();renderLocations();renderCart();
 </script>
 </body>
 </html>
