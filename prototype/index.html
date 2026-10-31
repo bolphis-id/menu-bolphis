@@ -283,11 +283,12 @@ var PACKAGES = [
    nama outlet hanya tampil sebagai konteks order (baris "Outlet: ..."). */
 var MERCHANT_PUSAT = 'BOLPHIS';
 var OUTLETS = [
-  {id:'racing',   name:'Racing Centre', city:'Makassar', lat:-5.14268, lon:119.45092, merchantName:'BOLPHIS — RACING CENTRE'},   // koordinat PASTI
-  {id:'alauddin', name:'Alauddin',      city:'Makassar', lat:-5.18033, lon:119.44013, merchantName:'BOLPHIS — ALAUDDIN'},
-  {id:'sudiang',  name:'Sudiang',       city:'Makassar', lat:-5.08390, lon:119.52707, merchantName:'BOLPHIS — SUDIANG'},        // koordinat sementara
-  {id:'panciro',  name:'Panciro Gowa',  city:'Gowa',     lat:-5.22039, lon:119.43789, merchantName:'BOLPHIS — PANCIRO GOWA'},   // koordinat SEMENTARA/meragukan — perlu verifikasi titik persis outlet
-  {id:'maros',    name:'Maros',         city:'Maros',    lat:-5.06012, lon:119.53091, merchantName:'BOLPHIS — MAROS'}           // koordinat sementara
+  // Semua koordinat = pin listing Google Maps resmi tiap outlet (diambil 2026-11-01; lihat titik-outlet-google-maps.md)
+  {id:'racing',   name:'Racing Centre', city:'Makassar', lat:-5.1437121, lon:119.4501539, merchantName:'BOLPHIS — RACING CENTRE'},   // pin Google Maps
+  {id:'alauddin', name:'Alauddin',      city:'Makassar', lat:-5.175748, lon:119.4350067, merchantName:'BOLPHIS — ALAUDDIN'},        // pin Google Maps
+  {id:'sudiang',  name:'Sudiang',       city:'Makassar', lat:-5.0850057, lon:119.5279361, merchantName:'BOLPHIS — SUDIANG'},        // pin Google Maps
+  {id:'panciro',  name:'Panciro Gowa',  city:'Gowa',     lat:-5.2395592, lon:119.4327096, merchantName:'BOLPHIS — PANCIRO GOWA'},   // pin Google Maps
+  {id:'maros',    name:'Maros',         city:'Maros',    lat:-5.0483223, lon:119.5554982, merchantName:'BOLPHIS — MAROS'}           // pin Google Maps
   // Bandara SENGAJA bukan pilihan: bukan outlet pickup & bukan outlet asal delivery.
 ];
 var ADMIN_WA = '6281140011911';
