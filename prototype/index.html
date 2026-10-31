@@ -5,109 +5,174 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BOLPHIS — Prototype Pemesanan Online (QRIS Simulasi)</title>
 <meta name="description" content="Prototype website pemesanan Bolphis: katalog, keranjang, ongkir otomatis dari pin lokasi, checkout Delivery/Pickup, pembayaran QRIS (simulasi).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-:root{--maroon:#4A1212;--maroon2:#6b1a1a;--gold:#F5D67A;--gold2:#e8c25a;--cream:#FFF8E7;--ink:#2b1a1a;--muted:#7a6a6a;--green:#1fa855}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink)}
+:root{--maroon:#4A1212;--maroon2:#6b1a1a;--gold:#F5D67A;--gold-soft:#FFF3D6;--bg:#FAFAF8;--card:#fff;--ink:#2A2220;--muted:#8A7D76;--line:#EFE7DE;--green:#1FA855;--shadow:0 2px 12px rgba(74,18,18,.07);--shadow-lg:0 12px 32px rgba(74,18,18,.16)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
 a{color:inherit}
-.proto-banner{position:sticky;top:0;z-index:90;background:var(--gold);color:var(--maroon);text-align:center;font-weight:800;font-size:13px;padding:9px 12px;letter-spacing:.2px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-header.hero{background:var(--maroon);color:#fff;text-align:center;padding:32px 16px 26px}
-header.hero img.logo{width:250px;max-width:78vw;height:auto;display:block;margin:0 auto 10px}
-header.hero h1{font-size:24px;line-height:1.25;margin:8px 0;color:var(--gold)}
-header.hero p{max-width:660px;margin:0 auto;color:#f3e6c8;line-height:1.6}
-.hero-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-.hero-pills span{border:1px solid var(--gold);color:var(--gold);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700}
-nav.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:12px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:37px;z-index:40}
-nav.chips a{text-decoration:none;background:#f6ead0;border:1px solid #ecd9a8;padding:8px 14px;border-radius:999px;font-weight:600;font-size:14px}
-main{max-width:1100px;margin:0 auto;padding:18px 16px 110px}
-h2{color:var(--maroon);margin:28px 4px 8px;text-transform:uppercase;letter-spacing:.5px;padding-left:14px;border-left:6px solid var(--gold);font-family:Georgia,serif;font-size:20px}
-.section-intro{color:var(--muted);margin:0 4px 14px;line-height:1.5;font-size:15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.card{background:#fff;border:1px solid #eee;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(74,18,18,.06);display:flex;flex-direction:column}
-.card img{width:100%;height:230px;object-fit:cover;display:block;background:#f3e6c8}
-.card .body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.card h3{margin:0;color:var(--maroon);font-size:19px;line-height:1.3}
-.price{font-size:19px;font-weight:800;color:var(--maroon2)}
-.oldprice{color:#a00;text-decoration:line-through;font-size:15px;margin-right:8px}
-.muted{color:var(--muted);font-size:14px;line-height:1.5}
-.badge{display:inline-block;background:var(--gold);color:var(--maroon);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
-.sizebtn{display:flex;gap:8px}
-.sizebtn button{flex:1;padding:9px 6px;border:1.5px solid #ddd;background:#fff;border-radius:12px;font-weight:700;cursor:pointer;line-height:1.35;font-size:13px}
-.sizebtn button.active{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold);background:#fff8e7}
-.qty{display:inline-flex;align-items:center;gap:8px}
-.qty button{width:32px;height:32px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:17px;cursor:pointer;line-height:1}
-.qty span{min-width:22px;text-align:center;font-weight:700}
-.btn{background:var(--maroon);color:#fff;border:0;padding:11px 16px;border-radius:999px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;font-size:15px}
+img{user-select:none}
+
+/* ===== banner prototype (strip ramping) ===== */
+.proto-banner{position:sticky;top:0;z-index:95;background:var(--gold);color:var(--maroon);text-align:center;font-weight:700;font-size:11.5px;line-height:1.35;padding:7px 12px;letter-spacing:.2px;box-shadow:0 1px 6px rgba(74,18,18,.18)}
+
+/* ===== header toko ala GrabFood ===== */
+.store-head{max-width:1100px;margin:0 auto}
+.cover{height:196px;overflow:hidden;position:relative;background:var(--maroon)}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(74,18,18,.06) 40%,rgba(74,18,18,.55) 100%)}
+.store-card{position:relative;background:var(--card);border-radius:20px;box-shadow:var(--shadow);margin:-46px 16px 0;padding:22px 20px 18px;text-align:center;border:1px solid var(--line)}
+.store-logo{width:min(228px,58vw);height:auto;display:block;margin:0 auto 6px}
+.store-name{font-size:19px;font-weight:800;letter-spacing:3.5px;color:var(--maroon);margin:2px 0 0}
+.store-tag{margin:5px 0 0;font-size:14.5px;font-weight:700;color:var(--ink)}
+.store-desc{margin:8px auto 0;max-width:560px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.info-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.info-chips span{background:var(--gold-soft);border:1px solid #F0DFAE;color:var(--maroon);padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:700}
+
+/* ===== navigasi kategori sticky ===== */
+nav.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;background:rgba(250,250,248,.92);backdrop-filter:blur(8px);position:sticky;top:30px;z-index:90;scrollbar-width:none;max-width:1100px;margin:6px auto 0}
+nav.chips::-webkit-scrollbar{display:none}
+nav.chips a{flex:0 0 auto;text-decoration:none;background:#fff;border:1px solid var(--line);color:var(--ink);padding:9px 16px;border-radius:999px;font-weight:700;font-size:13.5px;box-shadow:0 1px 4px rgba(74,18,18,.05);transition:background .15s,color .15s}
+nav.chips a.active{background:var(--maroon);border-color:var(--maroon);color:#fff}
+
+main{max-width:1100px;margin:0 auto;padding:14px 16px 132px}
+
+/* ===== pencarian ===== */
+.search-wrap{position:relative;margin:8px 0 4px}
+.search-wrap .search-ic{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:16px;opacity:.65;pointer-events:none}
+.search-wrap input{width:100%;font:inherit;font-size:14.5px;padding:13px 16px 13px 44px;border:1px solid var(--line);border-radius:999px;background:#fff;box-shadow:var(--shadow);outline:none}
+.search-wrap input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,214,122,.45)}
+#searchEmpty{background:#fff;border:1px dashed #E3D3B8;border-radius:14px;padding:16px;text-align:center;color:var(--muted);font-size:14px;margin-top:12px}
+
+h2{color:var(--maroon);margin:30px 2px 6px;font-size:20px;font-weight:800;letter-spacing:.2px;scroll-margin-top:118px}
+h2 .h2-sub{display:block}
+.section-intro{color:var(--muted);margin:0 2px 14px;line-height:1.55;font-size:13.5px}
+.tote-note{background:var(--gold-soft);border:1px solid #F0DFAE;border-radius:16px;padding:13px 16px;line-height:1.6;margin:16px 0 4px;font-size:13.5px;color:#5C4A12}
+.tote-note strong{color:var(--maroon)}
+
+/* ===== kartu produk ===== */
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:row}
+.card>img{width:118px;flex:0 0 118px;object-fit:cover;display:block;background:#F3E9D7;align-self:stretch}
+.card .body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px;flex:1;min-width:0}
+.card h3{margin:0;color:var(--ink);font-size:16.5px;font-weight:800;line-height:1.3}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{display:inline-block;background:var(--gold);color:var(--maroon);padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.4px}
+.badge.dark{background:var(--maroon);color:var(--gold)}
+.desc{color:var(--muted);font-size:13px;line-height:1.5;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.price{font-size:17px;font-weight:800;color:var(--maroon)}
+.oldprice{color:#B09A8E;text-decoration:line-through;font-size:13.5px;margin-right:7px;font-weight:600}
+.muted{color:var(--muted);font-size:13.5px;line-height:1.55}
+.sizebtn{display:flex;gap:7px;flex-wrap:wrap}
+.sizebtn button{border:1.5px solid #E7DCCB;background:#fff;color:var(--ink);padding:6px 12px;border-radius:999px;font-weight:700;cursor:pointer;font-size:12.5px;line-height:1.3;font-family:inherit}
+.sizebtn button .szp{font-weight:800;color:var(--maroon)}
+.sizebtn button.active{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.sizebtn button.active .szp{color:var(--gold)}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
+.qty{display:inline-flex;align-items:center;gap:9px}
+.qty button{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--maroon);background:#fff;color:var(--maroon);font-size:16px;font-weight:800;cursor:pointer;line-height:1;display:inline-flex;align-items:center;justify-content:center;font-family:inherit;padding:0}
+.qty button:active{background:var(--gold-soft)}
+.qty span{min-width:20px;text-align:center;font-weight:800;font-size:14.5px}
+.qty button.delbtn{width:auto;height:30px;border-radius:999px;padding:0 12px;font-size:12.5px;color:#B3261E;border-color:#EFC5C1}
+.btn{background:var(--maroon);color:#fff;border:0;padding:12px 18px;border-radius:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;font-size:14.5px;font-family:inherit;transition:filter .15s}
+.btn:hover{filter:brightness(1.1)}
 .btn.gold{background:var(--gold);color:var(--maroon)}
 .btn.wa{background:var(--green);color:#fff}
 .btn.block{width:100%}
-.btn:disabled{background:#c9bdbd;cursor:not-allowed;color:#fff}
-.btn.small{padding:8px 12px;font-size:13px}
-.promo-banner img{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 8px 24px rgba(74,18,18,.18)}
-.tote-note{background:#fff3d6;border:1px solid #ecd9a8;border-radius:14px;padding:13px 15px;line-height:1.6;margin:14px 0;font-size:14px}
-#cartBtn{position:fixed;right:16px;bottom:16px;z-index:50;background:var(--maroon);color:#fff;border:0;border-radius:999px;padding:14px 20px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer;font-size:15px}
-#cartBtn span{background:var(--gold);color:var(--maroon);border-radius:999px;padding:2px 9px;margin-left:6px}
-.panel-box{background:#fff;border:1px solid #eee;border-radius:18px;padding:18px;box-shadow:0 2px 10px rgba(74,18,18,.06)}
-.item{display:flex;gap:10px;border-bottom:1px solid #eee;padding:10px 0;align-items:flex-start}
-.item img{width:58px;height:58px;object-fit:cover;border-radius:10px;background:#f3e6c8}
-.item .grow{flex:1}
-.item h4{margin:0 0 4px;font-size:15px}
-.total-row{display:flex;justify-content:space-between;margin:8px 0;font-size:15px}
-.total-row.grand{font-size:19px;font-weight:800;border-top:2px solid var(--gold);padding-top:10px;margin-top:12px}
-label{display:block;font-weight:600;margin:13px 0 4px;font-size:14px}
-label .req{color:#b00}
-input,textarea,select{font:inherit;padding:10px;border:1px solid #ddd;border-radius:10px;width:100%;background:#fff}
+.btn:disabled{background:#D8CFC8;cursor:not-allowed;color:#fff;filter:none}
+.btn.small{padding:9px 14px;font-size:13px;border-radius:11px}
+.btn.add{margin-top:2px;padding:11px 14px}
+
+/* ===== bottom bar keranjang ala GrabFood ===== */
+#cartBtn{position:fixed;left:12px;right:12px;bottom:12px;z-index:80;max-width:1064px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--maroon);color:#fff;border:0;border-radius:16px;padding:13px 14px 13px 18px;font-family:inherit;font-size:15px;font-weight:700;box-shadow:0 12px 30px rgba(74,18,18,.38);cursor:pointer;text-align:left}
+#cartBtn .cb-left strong{font-weight:800}
+#cartBtn .cb-cta{background:var(--gold);color:var(--maroon);padding:9px 14px;border-radius:999px;font-weight:800;font-size:13.5px;white-space:nowrap}
+#cartBtn.empty{background:#fff;color:var(--muted);border:1px solid var(--line);box-shadow:0 4px 16px rgba(74,18,18,.10)}
+#cartBtn.empty .cb-cta{background:#F3EEE8;color:var(--muted)}
+
+/* ===== panel checkout ===== */
+.panel-box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.panel-box h3{font-size:17px}
+.item{display:flex;gap:12px;border-bottom:1px solid var(--line);padding:12px 0;align-items:flex-start}
+.item img{width:56px;height:56px;object-fit:cover;border-radius:12px;background:#F3E9D7}
+.item .grow{flex:1;min-width:0}
+.item h4{margin:0 0 3px;font-size:14.5px;font-weight:700}
+.item .muted{font-size:12.5px}
+.total-row{display:flex;justify-content:space-between;margin:9px 0;font-size:14.5px}
+.total-row.grand{font-size:19px;font-weight:800;color:var(--maroon);border-top:2px dashed #E7DCCB;padding-top:13px;margin-top:13px}
+label{display:block;font-weight:700;margin:15px 0 5px;font-size:13.5px}
+label .req{color:#B3261E}
+input,textarea,select{font:inherit;font-size:14.5px;padding:12px 14px;border:1px solid #E3D9CF;border-radius:12px;width:100%;background:#fff;outline:none;color:var(--ink)}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,214,122,.45)}
 textarea{resize:vertical}
-.modebtn{display:flex;gap:10px;margin-top:6px}
-.modebtn button{flex:1;padding:13px 8px;border:1.5px solid #ddd;background:#fff;border-radius:14px;font-weight:800;cursor:pointer;font-size:15px}
-.modebtn button.active{border-color:var(--maroon);background:var(--maroon);color:#fff}
-#map{height:300px;border-radius:14px;border:1px solid #ddd;z-index:1}
-.pin-info{background:#fff8e7;border:1px solid #ecd9a8;border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.55;margin-top:10px}
-.hint{font-size:13px;color:#b00;line-height:1.6;margin-top:8px}
-.hint.ok{color:var(--green)}
-#payModal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:100;align-items:center;justify-content:center;padding:16px}
+.modebtn{display:flex;gap:5px;margin-top:6px;background:#F3EEE8;border-radius:14px;padding:5px}
+.modebtn button{flex:1;padding:11px 8px;border:0;background:transparent;border-radius:11px;font-weight:800;cursor:pointer;font-size:14.5px;font-family:inherit;color:var(--muted)}
+.modebtn button.active{background:var(--maroon);color:#fff;box-shadow:0 3px 10px rgba(74,18,18,.30)}
+#map{height:300px;border-radius:16px;border:1px solid var(--line);z-index:1;overflow:hidden}
+.pin-info{background:var(--gold-soft);border:1px solid #F0DFAE;border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.6;margin-top:10px}
+.hint{font-size:13px;color:#B3261E;line-height:1.6;margin-top:10px}
+.hint.ok{color:var(--green);font-weight:600}
+
+/* ===== modal QRIS ===== */
+#payModal{position:fixed;inset:0;background:rgba(30,10,10,.62);display:none;z-index:100;align-items:center;justify-content:center;padding:16px}
 #payModal.open{display:flex}
-#payModal .panel{background:#fff;width:min(430px,100%);max-height:92vh;overflow:auto;border-radius:20px;padding:22px;text-align:center}
-.qrbox{width:220px;height:220px;margin:14px auto;padding:10px;background:#fff;border:2px solid #222;border-radius:10px}
+#payModal .panel{background:#fff;width:min(430px,100%);max-height:92vh;overflow:auto;border-radius:24px;padding:24px 22px;text-align:center;box-shadow:var(--shadow-lg)}
+.qrbox{width:220px;height:220px;margin:14px auto;padding:10px;background:#fff;border:2px solid #222;border-radius:14px}
 .qrgrid{display:grid;grid-template-columns:repeat(25,1fr);gap:0;width:100%;height:100%}
 .qrgrid i{background:transparent}
 .qrgrid i.on{background:#111}
-.success-box{background:#fff;border:2px solid var(--green);border-radius:18px;padding:18px}
-pre.order-text{white-space:pre-wrap;word-break:break-word;background:#fbf6ea;border:1px solid #ecd9a8;border-radius:12px;padding:14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.55;text-align:left}
-#toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:12px 18px;border-radius:999px;z-index:120;display:none;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.3);font-size:14px}
-footer{background:var(--maroon);color:#f3e6c8;padding:26px 16px;line-height:1.7;text-align:center;font-size:14px}
+
+/* ===== sukses ===== */
+.success-box{background:#fff;border:1.5px solid #BFE6CD;border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+#waWarn{border-radius:13px;padding:12px 14px;font-size:14px;line-height:1.55}
+pre.order-text{white-space:pre-wrap;word-break:break-word;background:#FBF7F1;border:1px solid #EEE2D0;border-radius:14px;padding:14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.55;text-align:left}
+#toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);background:#221816;color:#fff;padding:12px 18px;border-radius:999px;z-index:120;display:none;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.32);font-size:13.5px;max-width:92vw;text-align:center}
+footer{background:var(--maroon);color:#F3E6C8;padding:28px 16px 110px;line-height:1.7;text-align:center;font-size:13.5px}
 footer strong{color:var(--gold)}
-@media(max-width:520px){header.hero h1{font-size:21px}.card img{height:200px}#map{height:260px}}
+
+@media(min-width:760px){
+  .grid{grid-template-columns:1fr 1fr;gap:16px}
+  .card{flex-direction:column}
+  .card>img{width:100%;flex:none;height:190px}
+  .cover{height:230px}
+}
+@media(max-width:520px){#map{height:260px}.store-card{margin:-40px 12px 0}}
 </style>
 </head>
 <body>
 <div class="proto-banner">⚠ PROTOTYPE — pembayaran QRIS masih simulasi, belum menerima uang asli.</div>
 
-<header class="hero">
-<img class="logo" src="../assets/logo.jpg" alt="Logo BOLPHIS Bolen Pisang Phinisi">
-<h1>Oleh-Oleh Bolen Premium No.1 di Indonesia Timur</h1>
-<p>Pisang legit dibalut pastry renyah, dengan topping melimpah. Pesan di sini, bayar QRIS, lalu ambil di outlet atau kami antar pakai kurir Maxim.</p>
-<div class="hero-pills"><span>Bersertifikat Halal MUI</span><span>5 Outlet — Makassar · Gowa · Maros</span><span>Bayar QRIS</span></div>
+<header class="store-head">
+<div class="cover"><img src="../assets/paket-oleh-oleh.jpg" alt="Paket Oleh-Oleh Bolphis — mulai Rp150.000 + FREE Tote Bag"></div>
+<div class="store-card">
+<img class="store-logo" src="../assets/logo-clean-trim.png" alt="Logo BOLPHIS Bolen Pisang Phinisi">
+<h1 class="store-name">BOLPHIS</h1>
+<p class="store-tag">Bolen Pisang Phinisi | Oleh-Oleh Bolen Premium No.1</p>
+<p class="store-desc">Pisang legit dibalut pastry renyah dengan topping melimpah. Pesan di sini, bayar QRIS, lalu ambil di outlet atau kami antar ke lokasimu.</p>
+<div class="info-chips"><span>🍰 Oleh-Oleh Premium</span><span>🕕 Buka 06.00–22.00</span><span>📍 5 Outlet Makassar–Gowa–Maros</span><span>✅ Halal MUI</span></div>
+</div>
 </header>
 
 <nav class="chips">
-<a href="#paket">Paket Oleh-Oleh</a><a href="#reguler">Bolen Reguler</a><a href="#balanda">Balanda Series</a><a href="#checkout">Checkout</a>
+<a href="#paket" class="active">Paket Oleh-Oleh</a><a href="#reguler">Bolen Reguler</a><a href="#balanda">Balanda Series</a><a href="#checkout">Checkout</a>
 </nav>
 
 <main>
-<section class="promo-banner">
-<img src="../assets/paket-oleh-oleh.jpg" alt="Promo Paket Oleh-Oleh Bolphis, mulai Rp150.000 + FREE TOTE BAG">
-<p class="muted" style="text-align:center">Semua Paket Oleh-Oleh sudah termasuk FREE Tote Bag.</p>
-</section>
+<div class="search-wrap"><span class="search-ic">🔍</span><input id="searchInput" type="search" placeholder="Cari bolen favoritmu… (mis. premium, choco, balanda)" autocomplete="off"></div>
+<p id="searchEmpty" style="display:none">Tidak ada produk yang cocok dengan pencarianmu. Coba kata lain, ya.</p>
 
 <div class="tote-note"><strong>Tanpa kantong plastik — tote bag WAJIB dan otomatis dari sistem.</strong> Box Small kena Tote Bag Small Rp4.000, box Large kena Tote Bag Large Rp6.000. Satu tote maksimal 4 box seukuran (5 box = 2 tote, dst). Tote otomatis ini tidak bisa dihapus. Paket Oleh-Oleh tidak kena tote berbayar karena sudah FREE Tote Bag.</div>
 
-<h2 id="paket">Paket Oleh-Oleh — FREE TOTE BAG</h2>
+<h2 id="paket">Paket Oleh-Oleh</h2>
 <p class="section-intro">Mulai Rp150.000 + FREE TOTE BAG. Isi paket sudah tetap, tinggal pilih jumlah paket.</p>
 <div class="grid" id="grid-paket"></div>
 
 <h2 id="reguler">Bolen Reguler</h2>
-<p class="section-intro">Pilih ukuran Small (isi 6) atau Large (isi 10) dengan tombol, atur jumlah, lalu tambah ke keranjang.</p>
+<p class="section-intro">Pilih ukuran Small (isi 6) atau Large (isi 10), atur jumlah, lalu tambah ke keranjang.</p>
 <div class="grid" id="grid-reguler"></div>
 
 <h2 id="balanda">Balanda Series</h2>
@@ -158,7 +223,7 @@ footer strong{color:var(--gold)}
 </div>
 
 <div class="hint" id="payHint"></div>
-<button class="btn block" id="payBtn" type="button" style="margin-top:14px" disabled>Bayar Pakai QRIS</button>
+<button class="btn block" id="payBtn" type="button" style="margin-top:14px;padding:16px;font-size:16px;border-radius:14px" disabled>Bayar Pakai QRIS</button>
 <p class="muted" style="margin-top:10px">Pembayaran hanya via QRIS (satu QR untuk semua aplikasi bank &amp; e-wallet). Tidak ada metode lain. Di prototype ini pembayaran masih <strong>simulasi</strong>.</p>
 </div>
 
@@ -166,22 +231,22 @@ footer strong{color:var(--gold)}
 <h2 style="margin-top:6px">Pembayaran Berhasil (Simulasi)</h2>
 <div class="success-box">
 <p style="margin-top:0">✅ Pesananmu sudah <strong>LUNAS (simulasi)</strong>. Order + bukti bayar di bawah ini sudah terisi otomatis dari sistem.</p>
-<p id="waWarn" style="font-weight:700;color:#8a6d00;background:#fff3cd;border:1px solid #ffdf7e;border-radius:10px;padding:10px 12px">⚠️ Langkah terakhir ya kak — pesananmu BELUM sampai ke admin sampai kamu menekan tombol kirim (➤) di WhatsApp.</p>
+<p id="waWarn" style="font-weight:700;color:#8a6d00;background:#fff3cd;border:1px solid #ffdf7e">⚠️ Langkah terakhir ya kak — pesananmu BELUM sampai ke admin sampai kamu menekan tombol kirim (➤) di WhatsApp.</p>
 <p id="waAutoInfo" class="muted" style="display:none">Membuka WhatsApp dalam <span id="waCount">3</span> detik… <a href="#" id="waCancelAuto">Batalkan</a></p>
 <pre class="order-text" id="orderText"></pre>
 <a class="btn wa block" id="waBtn" href="#" target="_blank" rel="noopener" style="font-size:17px;padding:15px">📲 Kirim Order ke Admin (WhatsApp)</a>
 <button class="btn gold block" id="copyBtn" type="button" style="margin-top:10px">Salin Teks Order</button>
-<button class="btn block" id="againBtn" type="button" style="margin-top:10px;background:#eee;color:#333">Pesan Lagi</button>
+<button class="btn block" id="againBtn" type="button" style="margin-top:10px;background:#EFEAE4;color:#333">Pesan Lagi</button>
 </div>
 </div>
 </main>
 
-<button id="cartBtn" type="button">Keranjang <span>0</span></button>
+<button id="cartBtn" type="button" class="empty"><span class="cb-left">🛒 Keranjang kosong</span><span class="cb-cta">Lihat Keranjang</span></button>
 <div id="toast"></div>
 
 <div id="payModal" role="dialog" aria-label="Pembayaran QRIS">
 <div class="panel">
-<h3 style="margin:0;color:var(--maroon)">Bayar Pakai QRIS</h3>
+<h3 style="margin:0;color:var(--maroon);font-size:18px">Bayar Pakai QRIS</h3>
 <div id="payMerchant" style="margin-top:10px;font-weight:800;font-size:19px;letter-spacing:.6px;color:var(--maroon)">BOLPHIS</div>
 <p class="muted" style="margin:4px 0 0">Merchant QRIS pusat — semua outlet settle ke satu rekening pusat. Pastikan nama merchant di aplikasi kamu sama dengan nama di atas. Scan dengan aplikasi bank / e-wallet apa pun.</p>
 <div class="qrbox"><div class="qrgrid" id="qrGrid"></div></div>
@@ -189,7 +254,7 @@ footer strong{color:var(--gold)}
 <div class="total-row grand" style="max-width:300px;margin:14px auto 4px"><span>Total</span><span id="payTotal">Rp0</span></div>
 <p class="muted" id="payMeta" style="margin:4px 0 10px"></p>
 <button class="btn wa block" id="paidBtn" type="button">Saya Sudah Bayar (Simulasi)</button>
-<button class="btn block" id="cancelPayBtn" type="button" style="background:#eee;color:#333;margin-top:8px">Batal</button>
+<button class="btn block" id="cancelPayBtn" type="button" style="background:#EFEAE4;color:#333;margin-top:8px">Batal</button>
 </div>
 </div>
 
@@ -202,8 +267,8 @@ Prototype ini terpisah dari menu live dan belum menerima pembayaran asli.</p>
 /* ============================================================
    LOGIKA MURNI PROTOTYPE BOLPHIS (tanpa DOM — bisa diuji terpisah)
    - hitungTote: tote bag WAJIB otomatis per ukuran, maks 4 box/tote
-   - hitungOngkir: rumus kalibrasi Maxim + Rp2.000 (sudah termasuk
-     markup — JANGAN ditambah Rp2.000 lagi)
+   - hitungOngkir: rumus kalibrasi ongkir final (sudah termasuk
+     markup — JANGAN ditambah markup lagi)
    ============================================================ */
 var TOTE_SMALL_PRICE = 4000;
 var TOTE_LARGE_PRICE = 6000;
@@ -312,19 +377,20 @@ function selectedOutlet(){ var v=$('fOutlet').value; for (var i=0;i<OUTLETS.leng
 /* ---------- katalog ---------- */
 function productCard(p){
   var wrap=document.createElement('article'); wrap.className='card';
+  wrap.setAttribute('data-search', (p.name+' bolen '+p.desc).toLowerCase());
   wrap.innerHTML =
     '<img alt="">' +
     '<div class="body">' +
-      (p.badge ? '<span class="badge">'+p.badge+'</span>' : '') +
+      (p.badge ? '<div class="badges"><span class="badge dark">'+p.badge+'</span></div>' : '') +
       '<h3>'+p.name+'</h3>' +
-      '<p class="muted" style="margin:0">'+p.desc+'</p>' +
-      '<div class="sizebtn"><button type="button" data-size="Small">Small — isi 6<br>'+fmtRp(p.small)+'</button>' +
-      '<button type="button" data-size="Large">Large — isi 10<br>'+fmtRp(p.large)+'</button></div>' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">' +
-        '<span class="qty"><button type="button" data-dec>-</button><span data-qty>1</span><button type="button" data-inc>+</button></span>' +
+      '<p class="desc">'+p.desc+'</p>' +
+      '<div class="sizebtn"><button type="button" data-size="Small">Small · isi 6<br><span class="szp">'+fmtRp(p.small)+'</span></button>' +
+      '<button type="button" data-size="Large">Large · isi 10<br><span class="szp">'+fmtRp(p.large)+'</span></button></div>' +
+      '<div class="card-foot">' +
         '<span class="price" data-price></span>' +
+        '<span class="qty"><button type="button" data-dec aria-label="Kurangi">−</button><span data-qty>1</span><button type="button" data-inc aria-label="Tambah">+</button></span>' +
       '</div>' +
-      '<button class="btn block" type="button" data-add>Tambah ke Keranjang</button>' +
+      '<button class="btn block add" type="button" data-add>+ Tambah</button>' +
     '</div>';
   var size='Large', qty=1;
   var img=wrap.querySelector('img');
@@ -351,19 +417,20 @@ function productCard(p){
 }
 function packageCard(pk){
   var wrap=document.createElement('article'); wrap.className='card';
+  wrap.setAttribute('data-search', (pk.name+' paket oleh-oleh '+pk.contents).toLowerCase());
   wrap.innerHTML =
     '<img src="'+ASSET+'paket-oleh-oleh.jpg" alt="'+pk.name+'">' +
     '<div class="body">' +
-      '<span>' + (pk.tag ? '<span class="badge">⭐ '+pk.tag+'</span> ' : '') + '<span class="badge">FREE TOTE BAG</span></span>' +
+      '<div class="badges">' + (pk.tag ? '<span class="badge dark">⭐ '+pk.tag+'</span>' : '') + '<span class="badge">FREE TOTE BAG</span></div>' +
       '<h3>'+pk.name+'</h3>' +
-      '<p class="muted" style="margin:0">'+pk.detail+' — '+pk.contents+'</p>' +
+      '<p class="desc">'+pk.detail+' — '+pk.contents+'</p>' +
       '<div><span class="oldprice">'+fmtRp(pk.old)+'</span><span class="price">'+fmtRp(pk.price)+'</span></div>' +
-      '<p class="muted" style="margin:0">Sudah termasuk FREE Tote Bag — tidak kena tote wajib berbayar.</p>' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">' +
-        '<span class="qty"><button type="button" data-dec>-</button><span data-qty>1</span><button type="button" data-inc>+</button></span>' +
+      '<p class="muted" style="margin:0;font-size:12.5px">Sudah termasuk FREE Tote Bag — tidak kena tote wajib berbayar.</p>' +
+      '<div class="card-foot">' +
         '<span class="price" data-price></span>' +
+        '<span class="qty"><button type="button" data-dec aria-label="Kurangi">−</button><span data-qty>1</span><button type="button" data-inc aria-label="Tambah">+</button></span>' +
       '</div>' +
-      '<button class="btn block" type="button" data-add>Tambah Paket ke Keranjang</button>' +
+      '<button class="btn block add" type="button" data-add>+ Tambah Paket</button>' +
     '</div>';
   var qty=1;
   function sync(){ wrap.querySelector('[data-qty]').textContent=qty; wrap.querySelector('[data-price]').textContent=fmtRp(pk.price*qty); }
@@ -383,10 +450,34 @@ function renderCatalog(){
   PRODUCTS.forEach(function(p){ $('grid-'+p.section).appendChild(productCard(p)); });
   PACKAGES.forEach(function(pk){ $('grid-paket').appendChild(packageCard(pk)); });
   var d=document.createElement('article'); d.className='card';
-  d.innerHTML = '<div class="body"><h3>Durian</h3><span class="badge">Pricelist menyusul</span>' +
-    '<p class="muted" style="margin:0">Varian baru Bolphis dengan isian durian. Harganya belum resmi dirilis, jadi belum bisa dipesan lewat web.</p>' +
+  d.setAttribute('data-search', 'durian bolen');
+  d.innerHTML = '<div class="body"><div class="badges"><span class="badge">PRICELIST MENYUSUL</span></div><h3>Durian</h3>' +
+    '<p class="desc" style="-webkit-line-clamp:3">Varian baru Bolphis dengan isian durian. Harganya belum resmi dirilis, jadi belum bisa dipesan lewat web.</p>' +
     '<a class="btn wa block" href="https://wa.me/'+ADMIN_WA+'?text='+encodeURIComponent('Halo kak, boleh info varian Durian Bolphisnya?')+'" target="_blank" rel="noopener">Tanya via WhatsApp</a></div>';
   $('grid-reguler').appendChild(d);
+}
+
+/* ---------- pencarian produk (murni tampilan: saring kartu yang tampil) ---------- */
+function filterProducts(q){
+  q = (q || '').trim().toLowerCase();
+  var anyVisible = false;
+  ['paket','reguler','balanda'].forEach(function(sec){
+    var grid = $('grid-'+sec); if (!grid) return;
+    var vis = 0;
+    grid.querySelectorAll('.card').forEach(function(c){
+      var show = !q || (c.getAttribute('data-search') || '').indexOf(q) !== -1;
+      c.style.display = show ? '' : 'none';
+      if (show) vis++;
+    });
+    var h = $(sec);
+    var intro = h ? h.nextElementSibling : null;
+    if (h) h.style.display = vis ? '' : 'none';
+    if (intro && intro.classList && intro.classList.contains('section-intro')) intro.style.display = vis ? '' : 'none';
+    grid.style.display = vis ? '' : 'none';
+    if (vis) anyVisible = true;
+  });
+  var e = $('searchEmpty');
+  if (e) e.style.display = (!q || anyVisible) ? 'none' : 'block';
 }
 
 /* ---------- keranjang & total ---------- */
@@ -408,8 +499,8 @@ function renderCart(){
       html += '<div class="item"><img src="'+i.img+'" alt="'+i.name+'"><div class="grow"><h4>'+i.name+'</h4>' +
         '<div class="muted">'+(i.kind==='paket' ? (i.detail+' — FREE Tote Bag') : ('Ukuran '+i.size))+' — '+fmtRp(i.unitPrice)+'</div>' +
         (i.contents ? '<div class="muted">'+i.contents+'</div>' : '') +
-        '<div class="qty" style="margin-top:6px"><button type="button" data-cdec="'+idx+'">-</button><span>'+i.qty+'</span><button type="button" data-cinc="'+idx+'">+</button>' +
-        '<button type="button" data-cdel="'+idx+'" style="width:auto;border-radius:999px;padding:4px 10px;font-size:13px;height:32px">Hapus</button></div></div>' +
+        '<div class="qty" style="margin-top:7px"><button type="button" data-cdec="'+idx+'">−</button><span>'+i.qty+'</span><button type="button" data-cinc="'+idx+'">+</button>' +
+        '<button type="button" class="delbtn" data-cdel="'+idx+'">Hapus</button></div></div>' +
         '<div><strong>'+fmtRp(i.unitPrice*i.qty)+'</strong></div></div>';
     });
     // Baris tote WAJIB otomatis (dari sistem, tidak bisa dihapus/diubah customer)
@@ -426,8 +517,8 @@ function renderCart(){
   $('sumOngkir').textContent = (mode === 'delivery') ? (ongkir == null ? '— (pilih pin dulu)' : fmtRp(t.ongkir)) : fmtRp(0);
   $('sumTotal').textContent = fmtRp(t.total);
   var btn = $('cartBtn');
-  if (!cart.length) { btn.style.background = 'var(--maroon)'; btn.innerHTML = 'Keranjang <span>0</span>'; }
-  else { btn.style.background = '#1fa855'; btn.innerHTML = fmtRp(t.total) + ' <span>' + t.count + '</span>'; }
+  if (!cart.length) { btn.classList.add('empty'); btn.innerHTML = '<span class="cb-left">🛒 Keranjang kosong</span><span class="cb-cta">Lihat Keranjang</span>'; }
+  else { btn.classList.remove('empty'); btn.innerHTML = '<span class="cb-left"><strong>' + t.count + ' item</strong> • ' + fmtRp(t.total) + '</span><span class="cb-cta">Lihat Keranjang • Checkout ›</span>'; }
   validate();
 }
 
@@ -723,6 +814,14 @@ function init(){
   $('modeDelivery').addEventListener('click', function(){ setMode('delivery'); });
   $('modePickup').addEventListener('click', function(){ setMode('pickup'); });
   $('fOutlet').addEventListener('change', function(){ if (mode === 'delivery' && pin) updateRoute(); });
+  var searchInput = $('searchInput');
+  if (searchInput) searchInput.addEventListener('input', function(){ filterProducts(searchInput.value); });
+  document.querySelectorAll('nav.chips a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.querySelectorAll('nav.chips a').forEach(function(x){ x.classList.remove('active'); });
+      a.classList.add('active');
+    });
+  });
   $('geoBtn').addEventListener('click', function(){
     if (!navigator.geolocation) { showToast('Browser ini tidak mendukung geolokasi'); return; }
     showToast('Mengambil lokasimu…');
