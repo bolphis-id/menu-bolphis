@@ -165,7 +165,9 @@ footer strong{color:var(--gold)}
 <div id="successWrap" style="display:none;margin-top:22px">
 <h2 style="margin-top:6px">Pembayaran Berhasil (Simulasi)</h2>
 <div class="success-box">
-<p style="margin-top:0">✅ Pesananmu sudah <strong>LUNAS (simulasi)</strong>. Langkah terakhir: kirim order + bukti bayar ini ke admin Bolphis dengan tombol di bawah — teksnya sudah terisi otomatis, kamu tinggal tekan <strong>Kirim</strong> di WhatsApp.</p>
+<p style="margin-top:0">✅ Pesananmu sudah <strong>LUNAS (simulasi)</strong>. Order + bukti bayar di bawah ini sudah terisi otomatis dari sistem.</p>
+<p id="waWarn" style="font-weight:700;color:#8a6d00;background:#fff3cd;border:1px solid #ffdf7e;border-radius:10px;padding:10px 12px">⚠️ Langkah terakhir ya kak — pesananmu BELUM sampai ke admin sampai kamu menekan tombol kirim (➤) di WhatsApp.</p>
+<p id="waAutoInfo" class="muted" style="display:none">Membuka WhatsApp dalam <span id="waCount">3</span> detik… <a href="#" id="waCancelAuto">Batalkan</a></p>
 <pre class="order-text" id="orderText"></pre>
 <a class="btn wa block" id="waBtn" href="#" target="_blank" rel="noopener" style="font-size:17px;padding:15px">📲 Kirim Order ke Admin (WhatsApp)</a>
 <button class="btn gold block" id="copyBtn" type="button" style="margin-top:10px">Salin Teks Order</button>
@@ -299,6 +301,8 @@ var pin = null; // {lat,lng}
 var routeKm = null, ongkir = null, routeSource = '';
 var map = null, marker = null;
 var pendingOrder = null;
+var waOpened = false;   // true setelah customer membuka WhatsApp (klik tombol manual / auto-buka)
+var waTimer = null;     // interval hitung mundur auto-buka WhatsApp di halaman sukses
 
 function $(id){ return document.getElementById(id); }
 function showToast(msg){ var t=$('toast'); t.textContent=msg; t.style.display='block'; setTimeout(function(){ t.style.display='none'; },2300); }
@@ -636,6 +640,48 @@ function openPayment(){
   drawFakeQR();
   $('payModal').classList.add('open');
 }
+/* ---------- mitigasi "customer lupa klik": auto-buka WA + peringatan keluar halaman ---------- */
+function leaveGuard(e){ e.preventDefault(); e.returnValue = ''; }
+function armLeaveGuard(){ window.addEventListener('beforeunload', leaveGuard); }
+function disarmLeaveGuard(){ window.removeEventListener('beforeunload', leaveGuard); }
+function stopWaCountdown(){ if (waTimer) { clearInterval(waTimer); waTimer = null; } }
+function resetWaWarn(){
+  var w = $('waWarn');
+  w.textContent = '⚠️ Langkah terakhir ya kak — pesananmu BELUM sampai ke admin sampai kamu menekan tombol kirim (➤) di WhatsApp.';
+  w.style.background = '#fff3cd'; w.style.borderColor = '#ffdf7e'; w.style.color = '#8a6d00';
+}
+function markWaOpened(){
+  waOpened = true;
+  stopWaCountdown();
+  disarmLeaveGuard();
+  var w = $('waWarn');
+  w.textContent = 'WhatsApp sudah dibuka ✓ — pastikan kamu sudah menekan tombol kirim di sana ya kak';
+  w.style.background = '#e6f7ec'; w.style.borderColor = '#9adbb5'; w.style.color = '#146c43';
+  $('waAutoInfo').style.display = 'none';
+}
+function cancelAutoWa(e){
+  if (e) e.preventDefault();
+  stopWaCountdown();
+  // Peringatan keluar halaman TETAP aktif — WhatsApp belum dibuka customer.
+  $('waAutoInfo').innerHTML = 'Auto-buka dibatalkan. Klik tombol hijau di bawah untuk membuka WhatsApp ya kak.';
+}
+function startWaCountdown(url){
+  stopWaCountdown();
+  var info = $('waAutoInfo');
+  info.style.display = 'block';
+  info.innerHTML = 'Membuka WhatsApp dalam <span id="waCount">3</span> detik… <a href="#" id="waCancelAuto">Batalkan</a>';
+  $('waCancelAuto').addEventListener('click', cancelAutoWa);
+  var sisa = 3;
+  waTimer = setInterval(function(){
+    sisa--;
+    if (sisa <= 0) {
+      markWaOpened(); // menghentikan hitung mundur + melepas peringatan keluar halaman
+      window.location.href = url; // URL wa.me yang sama persis dengan tombol manual
+    } else {
+      var c = $('waCount'); if (c) c.textContent = sisa;
+    }
+  }, 1000);
+}
 function confirmPaid(){
   if (!pendingOrder) return;
   var now = nowMakassar();
@@ -644,10 +690,19 @@ function confirmPaid(){
   pendingOrder.payTimeText = now.teks;
   var text = buildOrderText(pendingOrder);
   $('orderText').textContent = text;
-  $('waBtn').href = 'https://wa.me/' + ADMIN_WA + '?text=' + encodeURIComponent(text);
+  var waUrl = 'https://wa.me/' + ADMIN_WA + '?text=' + encodeURIComponent(text);
+  $('waBtn').href = waUrl;
   $('payModal').classList.remove('open');
   $('successWrap').style.display = 'block';
+  // Cart RESET: order selesai, keranjang dikosongkan — tombol cart melayang tidak lagi menampilkan total lama.
+  cart = [];
+  renderCart();
+  // Mitigasi lupa kirim: pasang peringatan keluar halaman, lalu auto-buka WhatsApp (3 detik).
+  waOpened = false;
+  resetWaWarn();
+  armLeaveGuard();
   $('successWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  startWaCountdown(waUrl);
   showToast('Pembayaran simulasi berhasil — order siap dikirim ke admin');
 }
 
@@ -687,12 +742,14 @@ function init(){
   $('paidBtn').addEventListener('click', confirmPaid);
   $('cancelPayBtn').addEventListener('click', function(){ $('payModal').classList.remove('open'); });
   $('payModal').addEventListener('click', function(e){ if (e.target.id === 'payModal') $('payModal').classList.remove('open'); });
+  $('waBtn').addEventListener('click', markWaOpened);
   $('copyBtn').addEventListener('click', function(){
     var txt = $('orderText').textContent;
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function(){ showToast('Teks order tersalin'); }, function(){ showToast('Gagal menyalin otomatis'); });
     else showToast('Salin manual dari kotak teks ya');
   });
   $('againBtn').addEventListener('click', function(){
+    stopWaCountdown(); disarmLeaveGuard();
     cart = []; pin = null; routeKm = null; ongkir = null; pendingOrder = null;
     if (marker && map) { map.removeLayer(marker); marker = null; }
     $('successWrap').style.display = 'none';
