@@ -121,7 +121,7 @@ footer strong{color:var(--gold)}
 <div id="cartItems"></div>
 <div class="total-row"><span>Subtotal produk</span><span id="sumProduk">Rp0</span></div>
 <div class="total-row"><span>Tote bag wajib (otomatis)</span><span id="sumTote">Rp0</span></div>
-<div class="total-row" id="rowOngkir" style="display:none"><span>Ongkir (kurir Maxim)</span><span id="sumOngkir">Rp0</span></div>
+<div class="total-row" id="rowOngkir" style="display:none"><span>Ongkir</span><span id="sumOngkir">Rp0</span></div>
 <div class="total-row grand"><span>Total Bayar</span><span id="sumTotal">Rp0</span></div>
 
 <label for="fNama">Nama <span class="req">*</span></label>
@@ -482,7 +482,7 @@ function updateRoute(){
   function fallback(){
     if (done) return; done = true;
     var lurus = haversineKm(o.lat, o.lon, pin.lat, pin.lng);
-    routeKm = lurus * 1.32; routeSource = 'estimasi (jarak lurus × 1,32)';
+    routeKm = lurus * 1.32; routeSource = 'estimasi jarak';
     ongkir = hitungOngkir(routeKm);
     showRouteInfo(o);
   }
@@ -491,7 +491,7 @@ function updateRoute(){
     if (done) return;
     if (j && j.routes && j.routes.length && j.routes[0].distance != null) {
       done = true; clearTimeout(timer);
-      routeKm = j.routes[0].distance / 1000; routeSource = 'jarak jalan (OSRM)';
+      routeKm = j.routes[0].distance / 1000; routeSource = 'jarak jalan';
       ongkir = hitungOngkir(routeKm);
       showRouteInfo(o);
     } else fallback();
@@ -501,7 +501,7 @@ function showRouteInfo(o){
   $('pinInfo').innerHTML =
     '📍 Pin: <strong>' + pin.lat.toFixed(5) + ', ' + pin.lng.toFixed(5) + '</strong><br>' +
     'Outlet asal: <strong>' + o.name + '</strong> — Jarak: <strong>' + routeKm.toFixed(1).replace('.', ',') + ' km</strong> (' + routeSource + ')<br>' +
-    'Ongkir (Maxim + Rp2.000, min Rp8.000): <strong>' + fmtRp(ongkir) + '</strong><br>' +
+    'Ongkir: <strong>' + fmtRp(ongkir) + '</strong><br>' +
     '<a href="https://maps.google.com/maps?q=' + pin.lat + ',' + pin.lng + '" target="_blank" rel="noopener">Lihat titik di Google Maps</a>';
   renderCart();
 }
